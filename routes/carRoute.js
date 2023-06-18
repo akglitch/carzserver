@@ -20,6 +20,7 @@ router.delete('/cars/:id', carcon.deleteCar);
 
 
 router.route('/car/:car_id')
+.post(carcon.createCar)
 .get(carcon.getCars)
 .get(carcon.getCarById)
 .patch(carcon.updateCar)
