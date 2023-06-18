@@ -24,6 +24,8 @@ app.use('/', carRouter)
 const cartRouter = require('./routes/cartRoute');
 app.use('/cart',cartRouter)
 
+const orderRouter = require('./routes/orderRoute');
+app.use('/orders',orderRouter)
 
 
 

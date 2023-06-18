@@ -17,11 +17,7 @@ router.get('/profile', userController.getProfile);
 
 
 
-// Order Routes
-router.post('/orders', orderController.createOrder);
-router.get('/orders', orderController.getOrders);
-router.get('/orders/:id', orderController.getOrderById);
-// ...
+
 
 
 
