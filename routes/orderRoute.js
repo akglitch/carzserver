@@ -1,6 +1,6 @@
 const express = require('express');
 const ordercon = require('../controllers/orderController');
-const router = express.router()
+const router = express.Router()
 
 
 
