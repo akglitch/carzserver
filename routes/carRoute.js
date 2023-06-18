@@ -10,7 +10,7 @@ router.get('/cars', carcon.getCars);
 router.get('/cars/:id', carcon.getCarById);
 
 
-router.post('/cars', carcon.createCar);
+router.post('/car', carcon.createCar);
 
 
 router.put('/cars/:id', carcon.updateCar);
