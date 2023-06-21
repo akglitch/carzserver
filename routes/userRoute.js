@@ -1,25 +1,15 @@
 const express = require('express');
 const router = express.Router();
-
-
 const usercon = require('../controllers/userController');
 
-
-// User Routes
-router.post('/register', usercon.register);
-router.post('/login', usercon.login);
-router.get('/profile', usercon.getProfile);
-// ...
+// Route: /users
+router.post('/user', usercon.createUser);
+router.get('/users', usercon.getAllUsers);
 
 
+// Route: /users/:id
+router.get('/:id', usercon.getUserById);
+router.patch('/:id', usercon.updateUser);
+router.delete('/:id', usercon.deleteUser);
 
-
-router.route('/login/:login_id')
-.get(usercon.createUser)
-.get(usercon.getUserById)
-.get(usercon.loginUser)
-
-
-
-
-module.exports =  router;
+module.exports = router;

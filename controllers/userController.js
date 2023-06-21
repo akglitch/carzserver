@@ -18,6 +18,85 @@ async function createUser(req, res) {
   }
 }
 
+
+
+async function getAllUsers(req, res) {
+  try {
+    // Implement the logic to fetch all users from the database or any other data source
+    // For example, if you have a User model defined, you can use it to retrieve all users:
+    const users = await User.find(); // Assuming you have a User model
+    
+    // Send the users as a response
+    res.status(200).json({
+      success: true,
+      data: users,
+    });
+  } catch (error) {
+    // Handle any errors that occur during the process
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to retrieve users',
+    });
+  }
+}
+
+
+async function updateUser(req, res) {
+  try {
+    const { id } = req.params;
+    const { name, email, password } = req.body;
+
+    // Find the user by ID
+    const user = await User.findById(id);
+
+    // Check if the user exists
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+
+    // Update the user properties
+    user.name = name;
+    user.email = email;
+
+    // Hash the new password if provided
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      user.password = hashedPassword;
+    }
+
+    // Save the updated user
+    await user.save();
+
+    res.status(200).json({ success: true, data: user });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Failed to update user', details: error.message });
+  }
+}
+
+
+async function deleteUser(req, res) {
+  try {
+    const { id } = req.params;
+
+    // Find the user by ID
+    const user = await User.findById(id);
+
+    // Check if the user exists
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+
+    // Delete the user
+    await user.deleteOne();
+
+    res.status(200).json({ success: true, message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).json({ success: false, error: 'Failed to delete user', details: error.message });
+  }
+}
+
+
 async function loginUser(req, res) {
   try {
     const { email, password } = req.body;
@@ -61,6 +140,9 @@ async function getUserById(req, res) {
 }
 
 module.exports = {
+  updateUser,
+  deleteUser,
+  getAllUsers,
   createUser,
   loginUser,
   getUserById

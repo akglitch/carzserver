@@ -1,9 +1,8 @@
 // Import dependencies
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 const { connectToDB } = require('./db/dbconnection');
-const bcrypt = require('bcrypt')
 
 // Create the Express application
 const app = express();
@@ -11,24 +10,27 @@ const port = 3000; // Set your desired port number
 
 // Middleware configuration
 app.use(cors()); // Enable CORS
-app.use(express.json()); // Parse JSON request bodies
-app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
+app.use(bodyParser.json()); // Parse JSON request bodies
+app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded request bodies
+app.use(
+  express.urlencoded({extended : true})
+);
 
 // MongoDB connection
 connectToDB();
 
 // Use routes
 const carRouter = require('./routes/carRoute');
-app.use('/', carRouter)
+app.use('/', carRouter);
 
 const cartRouter = require('./routes/cartRoute');
-app.use('/cart',cartRouter)
+app.use('/cart', cartRouter);
 
 const orderRouter = require('./routes/orderRoute');
-app.use('/orders',orderRouter)
+app.use('/orders', orderRouter);
 
-
-
+const userRouter = require('./routes/userRoute');
+app.use('/', userRouter)
 
 // Start the server
 app.listen(port, () => {
